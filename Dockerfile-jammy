@@ -34,6 +34,7 @@ RUN git submodule update --init --remote --checkout mongo \
     && cd mongo \
     && git checkout r8.0.4
 
+WORKDIR /src/mongo
 
 # Apply patches
 COPY patches/*.patch /src/mongo
@@ -58,7 +59,6 @@ RUN . .venv/bin/activate && \
 RUN mkdir -p /tmp/output && \
     cd build/install/bin/ && \
     cp mongod /tmp/output/mongod
-
 
 RUN cd /tmp/output && \
     zip -r mongod.zip mongod
