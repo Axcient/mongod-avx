@@ -1,0 +1,11 @@
+--- src/third_party/tcmalloc/dist/tcmalloc/internal/percpu_rseq_asm.S
++++ src/third_party/tcmalloc/dist/tcmalloc/internal/percpu_rseq_asm.S
+@@ -35,7 +35,7 @@
+ .type tcmalloc_sampler, @object
+ .type tcmalloc_slabs, @object
+ .type __rseq_abi, @object
+-.section .tdata, "awT", @progbits, unique, 1
++.section .tdata, "awT", @progbits
+ .globl tcmalloc_sampler
+ .globl tcmalloc_slabs
+ .globl __rseq_abi
