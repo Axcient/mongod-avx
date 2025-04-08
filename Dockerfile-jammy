@@ -28,11 +28,12 @@ RUN apt-get install -y \
 RUN mkdir /src
 WORKDIR /src
 
-# Clone the MongoDB repository
-RUN git clone https://github.com/mongodb/mongo.git
+COPY . /src
 
-WORKDIR /src/mongo
-RUN git checkout r8.0.4
+RUN git submodule update --init --remote --checkout mongo \
+    && cd mongo \
+    && git checkout r8.0.4
+
 
 # Apply patches
 COPY patches/*.patch /src/mongo
@@ -54,48 +55,10 @@ RUN . .venv/bin/activate && \
      CCFLAGS="-march=nehalem"
 
 
-# Copy the built mongod to /tmp/output
 RUN mkdir -p /tmp/output && \
     cd build/install/bin/ && \
     cp mongod /tmp/output/mongod
 
-FROM ubuntu:jammy AS package
 
-ARG REV
-
-RUN apt-get clean && apt-get update && apt-get install -yq wget lsb-release
-
-COPY --from=build /tmp/output/mongod /tmp/mongod
-
-WORKDIR /tmp
-
-RUN wget -O /etc/apt/trusted.gpg.d/efs.gpg  https://download.slc.efscloud.net/replibit/efs.gpg && chmod 0666 /etc/apt/trusted.gpg.d/efs.gpg
-
-RUN echo "deb [arch=amd64] https://rb-mirror.slc.efscloud.net/ubuntu jammy main restricted universe multiverse" > /etc/apt/sources.list && \
-    echo "deb [arch=amd64] https://rb-mirror.slc.efscloud.net/ubuntu jammy-security main restricted universe multiverse" >> /etc/apt/sources.list && \
-    echo "deb [arch=amd64] https://rb-mirror.slc.efscloud.net/ubuntu jammy-updates main restricted universe multiverse" >> /etc/apt/sources.list && \
-    echo "deb [arch=amd64] https://rb-mirror.slc.efscloud.net/ubuntu jammy-backports main restricted universe multiverse" >> /etc/apt/sources.list
-
-RUN echo "deb https://rb-mirror.slc.efscloud.net/repo.replibit.net jammy-rb main" > /etc/apt/sources.list.d/replibit.list
-
-RUN apt update
-
-RUN apt download mongodb-8.0-jammy-server
-
-RUN mkdir -p /tmp/custom-mongo
-
-RUN dpkg-deb -R mongodb-8.0-jammy-server*.deb /tmp/custom-mongo
-
-WORKDIR /tmp/custom-mongo
-
-# replace mongod with the one we built
-RUN cp /tmp/mongod ./usr/bin/mongod
-
-# remove mongod.service
-RUN rm -rf ./lib
-
-# add axcient version
-RUN sed -i 's/Version: 8.0.4/Version: 8.0.4-ubuntu'$REV'~'$(lsb_release -r -s)'/g' DEBIAN/control
-
-# repack the deb
-RUN dpkg-deb -b /tmp/custom-mongo /tmp/mongodb-8.0-jammy-server-custom.deb
+RUN cd /tmp/output && \
+    zip -r mongod.zip mongod

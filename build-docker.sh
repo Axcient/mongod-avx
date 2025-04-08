@@ -22,6 +22,6 @@ docker container rm -f "${DOCKER_CONTAINER}" 2>/dev/null || true
 mkdir -p "${UPLOAD_DIR}" && rm -rf "${UPLOAD_DIR:?}/*"
 
 docker create -it --name="${DOCKER_CONTAINER}" "${DOCKER_TAG}" -e REV="${REV}" --build-arg NUM_CORES="${NUM_CORES}" bash
-docker cp "${DOCKER_CONTAINER}":/tmp/mongodb-8.0-"${PLATFORM}"-server-custom.deb "${UPLOAD_DIR}"
+docker cp "${DOCKER_CONTAINER}":/tmp/output/mongod.zip "${UPLOAD_DIR}"
 
 docker container rm -f "${DOCKER_CONTAINER}" || true
