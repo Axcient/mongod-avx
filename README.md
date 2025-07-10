@@ -4,6 +4,8 @@ This project builds a custom MongoDB 8.0.* server package for different Ubuntu d
 
 It applies patches from the `patches/` directory to build MongoDB **without AVX** compiler flags, enabling compatibility with older CPUs that do not support AVX or AVX2 instructions.
 
+Now supporting old CPUs like core2 which lacks of SSE4.2, AVX and AVX2 instructions.
+
 This project is based on the official MongoDB source code, which is licensed under the Server Side Public License (SSPL) v1.  
 The original source code is available here:  
 https://github.com/mongodb/mongo
@@ -26,6 +28,10 @@ The following patches are applied to the MongoDB source tree:
 - **0004-Disable-advanced-features-gcc.patch**
   Improve compatibility and portability by avoiding advanced CPU-specific features.
 
+### For core2 CPUs
+
+- **core2/0005-disable-crc32-snappy**
+    Disables CRC32 support in Snappy compression for better compatibility with older CPUs.
 
 ---
 
@@ -45,4 +51,15 @@ Each Dockerfile includes build dependencies and scripts to produce a custom `mon
 To build the Docker image and generate a custom `mongod` file, run:
 
 ```sh
-./builder.sh "<REVISION>" <DISTRIBUTION> <NUMBER_OF_CPU_CORES>
+./builder.sh "<REVISION>" <DISTRIBUTION> <NUMBER_OF_CPU_CORES> <CPU_ARCH>
+```
+
+Example:
+
+```sh
+./builder.sh "12" "focal" 4 "core2"
+
+or 
+
+./builder.sh "12" "jammy" 4 "nehalem"
+```
