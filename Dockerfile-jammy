@@ -1,9 +1,59 @@
-FROM ubuntu:jammy AS build
+FROM ubuntu:jammy AS mongo-src
+
+ENV DEBIAN_FRONTEND=noninteractive
+ENV PYTHON_KEYRING_BACKEND=keyring.backends.null.Keyring
+
+ARG CPU_ARCH=nehalem
+
+RUN echo "CPU Architecture: ${CPU_ARCH}"
+
+RUN apt-get clean && apt-get update && apt-get install -y  \
+    git \
+    tzdata \
+    software-properties-common \
+    manpages-dev \
+    build-essential \
+    libcurl4-openssl-dev \
+    libssl-dev \
+    liblzma-dev
+
+# Create and navigate to the src directory
+RUN mkdir /src
+WORKDIR /src
+
+COPY . /src
+
+RUN git submodule update --init --remote --checkout mongo
+
+WORKDIR /src/mongo
+
+RUN git checkout r8.0.4
+
+# Create patches directory
+COPY patches /src/mongo/patches
+# Copy architecture-specific patches if applicable
+RUN if [ "$CPU_ARCH" = "core2" ]; then \
+        cp patches/${CPU_ARCH}/*.patch patches ; \
+    fi
+
+# Apply patches
+RUN for patch in $(ls patches/*.patch | sort); do patch -p0 < $patch; done
+
+
+FROM ubuntu:jammy
 
 ENV DEBIAN_FRONTEND=noninteractive
 ENV PYTHON_KEYRING_BACKEND=keyring.backends.null.Keyring
 
 ARG NUM_CORES
+ARG CPU_ARCH=nehalem
+
+ENV CCFLAGS="-march=${CPU_ARCH}"
+
+# Copy only the mongo source
+COPY --from=mongo-src /src /src
+
+WORKDIR /src/mongo
 
 RUN apt-get clean && apt-get update
 
@@ -22,23 +72,9 @@ RUN apt-get install -y \
     git \
     wget \
     tar \
+    zip \
     lld
 
-# Create and navigate to the src directory
-RUN mkdir /src
-WORKDIR /src
-
-COPY . /src
-
-RUN git submodule update --init --remote --checkout mongo \
-    && cd mongo \
-    && git checkout r8.0.4
-
-WORKDIR /src/mongo
-
-# Apply patches
-COPY patches/*.patch /src/mongo
-RUN for patch in $(ls *.patch | sort); do patch -p0 < $patch; done
 
 # Set up Python virtual environment and install requirements
 RUN python3 -m venv .venv --prompt mongo && . .venv/bin/activate
@@ -53,7 +89,7 @@ RUN . .venv/bin/activate && \
     --dbg=off \
     --disable-warnings-as-errors \
     --experimental-optimization=-sandybridge \
-     CCFLAGS="-march=nehalem"
+     CCFLAGS="${CCFLAGS}"
 
 
 RUN mkdir -p /tmp/output && \
