@@ -1,0 +1,11 @@
+--- src/third_party/snappy/dist/snappy.cc
++++ src/third_party/snappy/dist/snappy.cc
+@@ -221,8 +221,6 @@ inline uint16_t* TableEntry(uint16_t* table, uint32_t bytes, uint32_t mask) {
+   // Mathematically, _mm_crc32_u32 (or similar) is a function of the
+   // xor of its arguments.
+   const uint32_t hash = __crc32cw(bytes, mask);
+-#elif SNAPPY_HAVE_X86_CRC32
+-  const uint32_t hash = _mm_crc32_u32(bytes, mask);
+ #else
+   constexpr uint32_t kMagic = 0x1e35a7bd;
+   const uint32_t hash = (kMagic * bytes) >> (31 - kMaxHashTableBits);

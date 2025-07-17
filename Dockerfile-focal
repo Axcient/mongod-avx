@@ -1,9 +1,59 @@
-FROM ubuntu:focal AS build
+FROM ubuntu:focal AS mongo-src
+
+ENV DEBIAN_FRONTEND=noninteractive
+ENV PYTHON_KEYRING_BACKEND=keyring.backends.null.Keyring
+
+ARG CPU_ARCH=nehalem
+
+RUN echo "CPU Architecture: ${CPU_ARCH}"
+
+RUN apt-get clean && apt-get update && apt-get install -y  \
+    git \
+    tzdata \
+    software-properties-common \
+    manpages-dev \
+    build-essential \
+    libcurl4-openssl-dev \
+    libssl-dev \
+    liblzma-dev
+
+
+RUN mkdir /src
+WORKDIR /src
+
+COPY . /src
+
+RUN git submodule update --init --remote --checkout mongo
+
+WORKDIR /src/mongo
+
+RUN git checkout r8.0.4
+
+# Create patches directory
+COPY patches /src/mongo/patches
+# Copy architecture-specific patches if applicable
+RUN if [ "$CPU_ARCH" = "core2" ]; then \
+        cp patches/${CPU_ARCH}/*.patch patches ; \
+    fi
+
+# Apply patches
+RUN for patch in $(ls patches/*.patch | sort); do patch -p0 < $patch; done
+
+
+FROM ubuntu:focal
 
 ENV DEBIAN_FRONTEND=noninteractive
 ENV PYTHON_KEYRING_BACKEND=keyring.backends.null.Keyring
 
 ARG NUM_CORES
+ARG CPU_ARCH=nehalem
+
+ENV CCFLAGS="-march=${CPU_ARCH}"
+
+# Copy only the mongo source
+COPY --from=mongo-src /src /src
+
+WORKDIR /src/mongo
 
 RUN apt-get clean && apt-get update
 
@@ -44,21 +94,7 @@ RUN update-alternatives --remove-all cpp
 RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-9 90 --slave /usr/bin/g++ g++ /usr/bin/g++-9 --slave /usr/bin/gcov gcov /usr/bin/gcov-9 --slave /usr/bin/gcc-ar gcc-ar /usr/bin/gcc-ar-9 --slave /usr/bin/gcc-ranlib gcc-ranlib /usr/bin/gcc-ranlib-9  --slave /usr/bin/cpp cpp /usr/bin/cpp-9
 RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-11 110 --slave /usr/bin/g++ g++ /usr/bin/g++-11 --slave /usr/bin/gcov gcov /usr/bin/gcov-11 --slave /usr/bin/gcc-ar gcc-ar /usr/bin/gcc-ar-11 --slave /usr/bin/gcc-ranlib gcc-ranlib /usr/bin/gcc-ranlib-11  --slave /usr/bin/cpp cpp /usr/bin/cpp-11
 
-RUN mkdir /src
-WORKDIR /src
-
-COPY . /src
-
-RUN git submodule update --init --remote --checkout mongo \
-    && cd mongo \
-    && git checkout r8.0.4
-
-WORKDIR /src/mongo
-
-# Apply patches
-COPY patches/*.patch /src/mongo
-RUN for patch in $(ls *.patch | sort); do patch -p0 < $patch; done
-
+#
 # Set up Python virtual environment and install requirements
 RUN python3.10 -m venv .venv --prompt mongo && . .venv/bin/activate
 RUN pip install 'poetry==1.5.1'
@@ -72,7 +108,7 @@ RUN . .venv/bin/activate && \
     --dbg=off \
     --disable-warnings-as-errors \
     --experimental-optimization=-sandybridge \
-     CCFLAGS="-march=nehalem"
+    CCFLAGS="${CCFLAGS}"
 
 RUN mkdir -p /tmp/output && \
     cd build/install/bin/ && \
@@ -80,4 +116,3 @@ RUN mkdir -p /tmp/output && \
 
 RUN cd /tmp/output && \
     zip -r mongod.zip mongod
-
