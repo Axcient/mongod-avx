@@ -39,9 +39,6 @@ RUN if [ "$CPU_ARCH" = "core2" ]; then \
 # Apply patches
 RUN for patch in $(ls patches/*.patch | sort); do patch -p0 < $patch; done
 
-# Temporary workaround to disable enterprise for 8.0.17
-#RUN sed -i '/enterprise/s/^\s*"/# "/' src/BUILD.bazel 
-
 # Copy .bazelrc.local to the source directory
 COPY .bazelrc.local /src/mongo/
 
