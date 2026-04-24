@@ -1,10 +1,10 @@
 ## Overview
 
-This project builds a custom MongoDB 8.0.* server package for different Ubuntu distributions (Focal and Jammy) with specific patches and configuration adjustments.
+This project builds a custom MongoDB 8.0.* server package for Ubuntu 22.04 (Jammy) with specific patches and configuration adjustments.
 
 It applies patches from the `patches/` directory to build MongoDB **without AVX** compiler flags, enabling compatibility with older CPUs that do not support AVX or AVX2 instructions.
 
-Now supporting old CPUs like core2 which lacks of SSE4.2, AVX and AVX2 instructions.
+Now supporting older CPUs like Core 2, which lack SSE4.2, AVX, and AVX2 instructions.
 
 This project is based on the official MongoDB source code, which is licensed under the Server Side Public License (SSPL) v1.  
 The original source code is available here:  
@@ -26,7 +26,7 @@ The following patches are applied to the MongoDB source tree:
   Disables AVX instruction use inside `mozjs` SIMD implementation.
 
 - **0004-Disable-advanced-features-gcc.patch**
-  Improve compatibility and portability by avoiding advanced CPU-specific features.
+  Improves compatibility and portability by avoiding advanced CPU-specific features.
 
 ### For core2 CPUs
 
@@ -37,12 +37,11 @@ The following patches are applied to the MongoDB source tree:
 
 ## Dockerfiles
 
-The following Dockerfiles are provided to build mongod serber file:
+The following Dockerfile is provided to build the mongod server file:
 
-- `Dockerfile-focal` – Targets Ubuntu 20.04 (Focal)
 - `Dockerfile-jammy` – Targets Ubuntu 22.04 (Jammy)
 
-Each Dockerfile includes build dependencies and scripts to produce a custom `mongod` file for the respective platform.
+The Dockerfile includes build dependencies and scripts to produce a custom `mongod` file.
 
 ---
 
@@ -51,15 +50,15 @@ Each Dockerfile includes build dependencies and scripts to produce a custom `mon
 To build the Docker image and generate a custom `mongod` file, run:
 
 ```sh
-./builder.sh "<REVISION>" <DISTRIBUTION> <NUMBER_OF_CPU_CORES> <CPU_ARCH>
+./builder.sh "<REVISION>" <CPU_ARCH>
 ```
 
 Example:
 
 ```sh
-./builder.sh "12" "focal" 4 "core2"
+./builder.sh "12" "core2"
 
-or 
+or
 
-./builder.sh "12" "jammy" 4 "nehalem"
+./builder.sh "12" "nehalem"
 ```

@@ -1,0 +1,16 @@
+--- bazel/toolchains/cc/mongo_linux/mongo_compiler_flags.bzl
++++ bazel/toolchains/cc/mongo_linux/mongo_compiler_flags.bzl.p
+@@ -268,14 +268,6 @@
+         "-march=z196",
+         "-mtune=zEC12",
+     ],
+-    # If we are enabling vectorization in sandybridge mode, we'd rather not hit
+-    # the 256 wide vector instructions because the heavy versions can cause
+-    # clock speed reductions.
+-    "//bazel/config:linux_x86_64": [
+-        "-march=sandybridge",
+-        "-mtune=generic",
+-        "-mprefer-vector-width=128",
+-    ],
+     "//conditions:default": [],
+ })
