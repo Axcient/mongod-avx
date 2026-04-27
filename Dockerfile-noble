@@ -1,0 +1,85 @@
+FROM ubuntu:noble AS mongo-src
+
+ENV DEBIAN_FRONTEND=noninteractive
+ENV PYTHON_KEYRING_BACKEND=keyring.backends.null.Keyring
+
+ARG CPU_ARCH=nehalem
+
+RUN echo "CPU Architecture: ${CPU_ARCH}"
+
+RUN apt-get clean && apt-get update && apt-get install -y  \
+	git \
+	tzdata \
+	software-properties-common \
+	manpages-dev \
+	build-essential \
+	libcurl4-openssl-dev \
+	libssl-dev \
+	liblzma-dev
+
+# Create and navigate to the src directory
+RUN mkdir /src
+WORKDIR /src
+
+COPY . /src
+
+RUN git submodule update --init --remote --checkout mongo
+
+WORKDIR /src/mongo
+
+RUN git checkout r8.0.17
+
+# Create patches directory
+COPY patches /src/mongo/patches
+# Copy architecture-specific patches if applicable
+RUN if [ "$CPU_ARCH" = "core2" ]; then \
+		cp patches/${CPU_ARCH}/*.patch patches ; \
+	fi
+
+# Apply patches
+RUN for patch in $(ls patches/*.patch | sort); do patch -p0 < $patch; done
+
+# Copy .bazelrc.local to the source directory
+COPY .bazelrc.local /src/mongo/
+
+FROM ubuntu:noble
+
+ENV DEBIAN_FRONTEND=noninteractive
+ENV PYTHON_KEYRING_BACKEND=keyring.backends.null.Keyring
+
+ARG CPU_ARCH=nehalem
+
+# Copy only the mongo source
+COPY --from=mongo-src /src /src
+
+WORKDIR /src/mongo
+
+RUN apt-get clean && apt-get update
+
+RUN apt-get install -y \
+	tzdata \
+	software-properties-common \
+	manpages-dev \
+	build-essential \
+	libcurl4-openssl-dev \
+	libssl-dev \
+	liblzma-dev \
+	python3 \
+	python3-venv \
+	python-dev-is-python3 \
+	python3-pip \
+	git \
+	wget \
+	tar \
+	zip \
+	lld
+
+
+# Install Bazel
+RUN python3 buildscripts/install_bazel.py
+ENV PATH="/root/.local/bin:${PATH}"
+
+# Build MongoDB
+RUN USE_NATIVE_TOOLCHAIN=1 bazel build --config=local --repo_env=BAZEL_DO_NOT_DETECT_CPP_TOOLCHAIN=0 --compiler_type=gcc --linker=auto -c opt --copt=-march=${CPU_ARCH} //src/mongo/db:mongod
+
+ENTRYPOINT ["bash", "-lc", "mkdir -p /tmp/output && cp -L bazel-bin/src/mongo/db/mongod /tmp/output/mongod && cd /tmp/output && zip -r mongod.zip mongod"]

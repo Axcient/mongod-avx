@@ -1,6 +1,6 @@
 ## Overview
 
-This project builds a custom MongoDB 8.0.* server package for Ubuntu 22.04 (Jammy) with specific patches and configuration adjustments.
+This project builds a custom MongoDB 8.0.* server package for **Ubuntu 22.04 (Jammy)** or **Ubuntu 24.04 (Noble)** with specific patches and configuration adjustments.
 
 It applies patches from the `patches/` directory to build MongoDB **without AVX** compiler flags, enabling compatibility with older CPUs that do not support AVX or AVX2 instructions.
 
@@ -37,9 +37,11 @@ The following patches are applied to the MongoDB source tree:
 
 ## Dockerfiles
 
-The following Dockerfile is provided to build the mongod server file:
+Use one of the following to build the `mongod` binary inside a matching Ubuntu image:
 
-- `Dockerfile-jammy` – Targets Ubuntu 22.04 (Jammy)
+- `Dockerfile-jammy` – Ubuntu 22.04 (Jammy)
+- `Dockerfile-noble` – Ubuntu 24.04 (Noble)
+
 
 The Dockerfile includes build dependencies and scripts to produce a custom `mongod` file.
 
@@ -49,16 +51,20 @@ The Dockerfile includes build dependencies and scripts to produce a custom `mong
 
 To build the Docker image and generate a custom `mongod` file, run:
 
-```sh
-./builder.sh "<REVISION>" <CPU_ARCH>
+```text
+./builder.sh [<REVISION>] [<CPU_ARCH>] [<UBUNTU_CODENAME>]
 ```
 
 Example:
 
 ```sh
 ./builder.sh "12" "core2"
-
-or
-
 ./builder.sh "12" "nehalem"
+```
+
+### Examples (Noble)
+
+```sh
+./builder.sh "12" "core2" noble
+./builder.sh "12" "nehalem" noble
 ```
