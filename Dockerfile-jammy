@@ -29,12 +29,8 @@ WORKDIR /src/mongo
 
 RUN git checkout r8.0.17
 
-# Create patches directory
+# Patches
 COPY patches /src/mongo/patches
-# Copy architecture-specific patches if applicable
-RUN if [ "$CPU_ARCH" = "core2" ]; then \
-		cp patches/${CPU_ARCH}/*.patch patches ; \
-	fi
 
 # Apply patches
 RUN for patch in $(ls patches/*.patch | sort); do patch -p0 < $patch; done
