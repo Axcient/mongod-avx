@@ -31,7 +31,7 @@ build --copt=-Wno-missing-braces
 build --copt=-Wno-psabi
 build --copt=-Wimplicit-fallthrough=5
 build --cxxopt=-Woverloaded-virtual
-build --cxxopt=-Wpessimizing-move
+build --cxxopt=-Wno-pessimizing-move
 build --cxxopt=-Wno-maybe-uninitialized
 build --cxxopt=-fsized-deallocation
 

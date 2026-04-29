@@ -28,6 +28,9 @@ The following patches are applied to the MongoDB source tree:
 - **0004-Disable-advanced-features-gcc.patch**
   Improves compatibility and portability by avoiding advanced CPU-specific features.
 
+- **0007-Fix-pessimizing-move-in-expression_hasher-for-GCC13.patch**  
+  Removes a redundant `std::move` on a returned temporary so **GCC 13** (e.g. Ubuntu 24.04) does not fail with `-Werror=pessimizing-move`. Jammy’s GCC 11 is lenient here.
+
 ---
 
 ## Dockerfiles
@@ -35,10 +38,11 @@ The following patches are applied to the MongoDB source tree:
 Use one of the following to build the `mongod` binary inside a matching Ubuntu image:
 
 - `Dockerfile-jammy` – Ubuntu 22.04 (Jammy)
-- `Dockerfile-noble` – Ubuntu 24.04 (Noble)
-
+- `Dockerfile-noble` – Ubuntu 24.04 (Noble; Bazel adds GCC 13 workarounds: `-Wno-interference-size`, `-Wno-mismatched-new-delete`, `-Wno-array-bounds`, `-Wno-stringop-overflow`)
 
 The Dockerfile includes build dependencies and scripts to produce a custom `mongod` file.
+
+**Noble vs Jammy compiler:** Noble’s default **GCC 13** is stricter than Jammy’s **GCC 11** for diagnostics that MongoDB 8.0.x triggers under **`-Werror`**. APT packages here are normal LTS compilers, not outdated. Extra `--cxxopt`/`--copt` on Noble work around GCC-13-specific issues (`immer`, `std::hardware_*_interference_size`, etc.). In **`.bazelrc.local`** this repo uses **`--cxxopt=-Wno-pessimizing-move`** instead of `-Wpessimizing-move` so redundant `std::move` diagnostics are not enabled on top of Mongo’s warning set.
 
 ---
 
