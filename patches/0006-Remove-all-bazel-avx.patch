@@ -1,0 +1,863 @@
+diff --git src/BUILD.bazel src/BUILD.bazel
+index 1ce8518912d..99490229297 100644
+--- src/BUILD.bazel
++++ src/BUILD.bazel
+@@ -239,95 +239,95 @@ mongo_cc_library(
+         "//src/mongo/db/matcher:matcher_global_hdrs",
+         "//src/mongo/db/matcher/schema:encrypt_schema_idl_gen",
+         "//src/mongo/db/matcher/schema:schema_global_hdrs",
+-        "//src/mongo/db/modules/enterprise:enterprise_global_hdrs",
+-        "//src/mongo/db/modules/enterprise/docs:docs_global_hdrs",
+-        "//src/mongo/db/modules/enterprise/docs/fle:fle_global_hdrs",
+-        "//src/mongo/db/modules/enterprise/docs/testing:testing_global_hdrs",
+-        "//src/mongo/db/modules/enterprise/src:src_global_hdrs",
+-        "//src/mongo/db/modules/enterprise/src/audit:audit_commands_idl_gen",
+-        "//src/mongo/db/modules/enterprise/src/audit:audit_config_idl_gen",
+-        "//src/mongo/db/modules/enterprise/src/audit:audit_decryptor_options_idl_gen",
+-        "//src/mongo/db/modules/enterprise/src/audit:audit_event_type_idl_gen",
+-        "//src/mongo/db/modules/enterprise/src/audit:audit_global_hdrs",
+-        "//src/mongo/db/modules/enterprise/src/audit:audit_header_options_idl_gen",
+-        "//src/mongo/db/modules/enterprise/src/audit:audit_options_idl_gen",
+-        "//src/mongo/db/modules/enterprise/src/audit/logger:logger_global_hdrs",
+-        "//src/mongo/db/modules/enterprise/src/audit/mongo:mongo_global_hdrs",
+-        "//src/mongo/db/modules/enterprise/src/audit/ocsf:ocsf_audit_events_idl_gen",
+-        "//src/mongo/db/modules/enterprise/src/audit/ocsf:ocsf_global_hdrs",
+-        "//src/mongo/db/modules/enterprise/src/encryptdb:decrypt_tool_options_idl_gen",
+-        "//src/mongo/db/modules/enterprise/src/encryptdb:encryptdb_global_hdrs",
+-        "//src/mongo/db/modules/enterprise/src/encryptdb:encryption_key_manager_idl_gen",
+-        "//src/mongo/db/modules/enterprise/src/encryptdb:encryption_options_idl_gen",
+-        "//src/mongo/db/modules/enterprise/src/encryptdb:keystore_metadata_idl_gen",
+-        "//src/mongo/db/modules/enterprise/src/encryptdb:log_redact_options_idl_gen",
+-        "//src/mongo/db/modules/enterprise/src/fcbis:fcbis_global_hdrs",
+-        "//src/mongo/db/modules/enterprise/src/fips:fips_flag_client_idl_gen",
+-        "//src/mongo/db/modules/enterprise/src/fips:fips_flag_server_idl_gen",
+-        "//src/mongo/db/modules/enterprise/src/fips:fips_global_hdrs",
+-        "//src/mongo/db/modules/enterprise/src/fle:fle_global_hdrs",
+-        "//src/mongo/db/modules/enterprise/src/fle/commands:commands_global_hdrs",
+-        "//src/mongo/db/modules/enterprise/src/fle/lib:lib_global_hdrs",
+-        "//src/mongo/db/modules/enterprise/src/fle/query_analysis:query_analysis_global_hdrs",
+-        "//src/mongo/db/modules/enterprise/src/fle/shell:shell_global_hdrs",
+-        "//src/mongo/db/modules/enterprise/src/hot_backups:backup_cursor_parameters_idl_gen",
+-        "//src/mongo/db/modules/enterprise/src/hot_backups:document_source_backup_file_idl_gen",
+-        "//src/mongo/db/modules/enterprise/src/hot_backups:hot_backups_global_hdrs",
+-        "//src/mongo/db/modules/enterprise/src/inmemory:inmemory_global_hdrs",
+-        "//src/mongo/db/modules/enterprise/src/inmemory:inmemory_global_options_idl_gen",
+-        "//src/mongo/db/modules/enterprise/src/kerberos:kerberos_global_hdrs",
+-        "//src/mongo/db/modules/enterprise/src/kerberos:kerberos_tool_options_idl_gen",
+-        "//src/mongo/db/modules/enterprise/src/kmip:kmip_global_hdrs",
+-        "//src/mongo/db/modules/enterprise/src/kmip:kmip_options_idl_gen",
+-        "//src/mongo/db/modules/enterprise/src/ldap:ldap_global_hdrs",
+-        "//src/mongo/db/modules/enterprise/src/ldap:ldap_options_idl_gen",
+-        "//src/mongo/db/modules/enterprise/src/ldap:ldap_options_mongod_idl_gen",
+-        "//src/mongo/db/modules/enterprise/src/ldap:ldap_parameters_idl_gen",
+-        "//src/mongo/db/modules/enterprise/src/ldap:ldap_runtime_parameters_idl_gen",
+-        "//src/mongo/db/modules/enterprise/src/ldap:ldap_tool_options_idl_gen",
+-        "//src/mongo/db/modules/enterprise/src/ldap:ldap_user_cache_poller_idl_gen",
+-        "//src/mongo/db/modules/enterprise/src/ldap/connections:connections_global_hdrs",
+-        "//src/mongo/db/modules/enterprise/src/ldap/name_mapping:name_mapping_global_hdrs",
+-        "//src/mongo/db/modules/enterprise/src/live_import:collection_properties_idl_gen",
+-        "//src/mongo/db/modules/enterprise/src/live_import:live_import_global_hdrs",
+-        "//src/mongo/db/modules/enterprise/src/live_import/commands:commands_global_hdrs",
+-        "//src/mongo/db/modules/enterprise/src/live_import/commands:export_collection_idl_gen",
+-        "//src/mongo/db/modules/enterprise/src/live_import/commands:import_collection_idl_gen",
+-        "//src/mongo/db/modules/enterprise/src/live_import/commands:vote_commit_import_collection_idl_gen",
+-        "//src/mongo/db/modules/enterprise/src/magic_restore:magic_restore_global_hdrs",
+-        "//src/mongo/db/modules/enterprise/src/magic_restore:magic_restore_options_idl_gen",
+-        "//src/mongo/db/modules/enterprise/src/magic_restore:magic_restore_structs_idl_gen",
+-        "//src/mongo/db/modules/enterprise/src/queryable:queryable_global_hdrs",
+-        "//src/mongo/db/modules/enterprise/src/queryable/blockstore:blockstore_global_hdrs",
+-        "//src/mongo/db/modules/enterprise/src/queryable/queryable_wt:queryable_global_options_idl_gen",
+-        "//src/mongo/db/modules/enterprise/src/queryable/queryable_wt:queryable_wt_global_hdrs",
+-        "//src/mongo/db/modules/enterprise/src/sasl:auth_delay_idl_gen",
+-        "//src/mongo/db/modules/enterprise/src/sasl:oidc_commands_idl_gen",
+-        "//src/mongo/db/modules/enterprise/src/sasl:oidc_parameters_idl_gen",
+-        "//src/mongo/db/modules/enterprise/src/sasl:sasl_aws_server_options_idl_gen",
+-        "//src/mongo/db/modules/enterprise/src/sasl:sasl_global_hdrs",
+-        "//src/mongo/db/modules/enterprise/src/scripts:scripts_global_hdrs",
+-        "//src/mongo/db/modules/enterprise/src/serverless:mongoqd_options_idl_gen",
+-        "//src/mongo/db/modules/enterprise/src/serverless:serverless_global_hdrs",
+-        "//src/mongo/db/modules/enterprise/src/streams:streams_global_hdrs",
+-        "//src/mongo/db/modules/enterprise/src/streams/commands:commands_global_hdrs",
+-        "//src/mongo/db/modules/enterprise/src/streams/commands:stream_ops_idl_gen",
+-        "//src/mongo/db/modules/enterprise/src/streams/exec:checkpoint_data_idl_gen",
+-        "//src/mongo/db/modules/enterprise/src/streams/exec:common_idl_gen",
+-        "//src/mongo/db/modules/enterprise/src/streams/exec:config_idl_gen",
+-        "//src/mongo/db/modules/enterprise/src/streams/exec:exec_global_hdrs",
+-        "//src/mongo/db/modules/enterprise/src/streams/exec:exec_internal_idl_gen",
+-        "//src/mongo/db/modules/enterprise/src/streams/exec:stages_idl_gen",
+-        "//src/mongo/db/modules/enterprise/src/streams/exec/checkpoint:checkpoint_global_hdrs",
+-        "//src/mongo/db/modules/enterprise/src/streams/exec/tests:tests_global_hdrs",
+-        "//src/mongo/db/modules/enterprise/src/streams/management:management_global_hdrs",
+-        "//src/mongo/db/modules/enterprise/src/streams/management/tests:tests_global_hdrs",
+-        "//src/mongo/db/modules/enterprise/src/streams/tools:tools_global_hdrs",
+-        "//src/mongo/db/modules/enterprise/src/streams/util:util_global_hdrs",
+-        "//src/mongo/db/modules/enterprise/src/streams/util/tests:tests_global_hdrs",
+-        "//src/mongo/db/modules/enterprise/src/util:util_global_hdrs",
+-        "//src/mongo/db/modules/enterprise/src/workloads:workloads_global_hdrs",
+-        "//src/mongo/db/modules/enterprise/src/workloads/streams:streams_global_hdrs",
++# "//src/mongo/db/modules/enterprise:enterprise_global_hdrs",
++# "//src/mongo/db/modules/enterprise/docs:docs_global_hdrs",
++# "//src/mongo/db/modules/enterprise/docs/fle:fle_global_hdrs",
++# "//src/mongo/db/modules/enterprise/docs/testing:testing_global_hdrs",
++# "//src/mongo/db/modules/enterprise/src:src_global_hdrs",
++# "//src/mongo/db/modules/enterprise/src/audit:audit_commands_idl_gen",
++# "//src/mongo/db/modules/enterprise/src/audit:audit_config_idl_gen",
++# "//src/mongo/db/modules/enterprise/src/audit:audit_decryptor_options_idl_gen",
++# "//src/mongo/db/modules/enterprise/src/audit:audit_event_type_idl_gen",
++# "//src/mongo/db/modules/enterprise/src/audit:audit_global_hdrs",
++# "//src/mongo/db/modules/enterprise/src/audit:audit_header_options_idl_gen",
++# "//src/mongo/db/modules/enterprise/src/audit:audit_options_idl_gen",
++# "//src/mongo/db/modules/enterprise/src/audit/logger:logger_global_hdrs",
++# "//src/mongo/db/modules/enterprise/src/audit/mongo:mongo_global_hdrs",
++# "//src/mongo/db/modules/enterprise/src/audit/ocsf:ocsf_audit_events_idl_gen",
++# "//src/mongo/db/modules/enterprise/src/audit/ocsf:ocsf_global_hdrs",
++# "//src/mongo/db/modules/enterprise/src/encryptdb:decrypt_tool_options_idl_gen",
++# "//src/mongo/db/modules/enterprise/src/encryptdb:encryptdb_global_hdrs",
++# "//src/mongo/db/modules/enterprise/src/encryptdb:encryption_key_manager_idl_gen",
++# "//src/mongo/db/modules/enterprise/src/encryptdb:encryption_options_idl_gen",
++# "//src/mongo/db/modules/enterprise/src/encryptdb:keystore_metadata_idl_gen",
++# "//src/mongo/db/modules/enterprise/src/encryptdb:log_redact_options_idl_gen",
++# "//src/mongo/db/modules/enterprise/src/fcbis:fcbis_global_hdrs",
++# "//src/mongo/db/modules/enterprise/src/fips:fips_flag_client_idl_gen",
++# "//src/mongo/db/modules/enterprise/src/fips:fips_flag_server_idl_gen",
++# "//src/mongo/db/modules/enterprise/src/fips:fips_global_hdrs",
++# "//src/mongo/db/modules/enterprise/src/fle:fle_global_hdrs",
++# "//src/mongo/db/modules/enterprise/src/fle/commands:commands_global_hdrs",
++# "//src/mongo/db/modules/enterprise/src/fle/lib:lib_global_hdrs",
++# "//src/mongo/db/modules/enterprise/src/fle/query_analysis:query_analysis_global_hdrs",
++# "//src/mongo/db/modules/enterprise/src/fle/shell:shell_global_hdrs",
++# "//src/mongo/db/modules/enterprise/src/hot_backups:backup_cursor_parameters_idl_gen",
++# "//src/mongo/db/modules/enterprise/src/hot_backups:document_source_backup_file_idl_gen",
++# "//src/mongo/db/modules/enterprise/src/hot_backups:hot_backups_global_hdrs",
++# "//src/mongo/db/modules/enterprise/src/inmemory:inmemory_global_hdrs",
++# "//src/mongo/db/modules/enterprise/src/inmemory:inmemory_global_options_idl_gen",
++# "//src/mongo/db/modules/enterprise/src/kerberos:kerberos_global_hdrs",
++# "//src/mongo/db/modules/enterprise/src/kerberos:kerberos_tool_options_idl_gen",
++# "//src/mongo/db/modules/enterprise/src/kmip:kmip_global_hdrs",
++# "//src/mongo/db/modules/enterprise/src/kmip:kmip_options_idl_gen",
++# "//src/mongo/db/modules/enterprise/src/ldap:ldap_global_hdrs",
++# "//src/mongo/db/modules/enterprise/src/ldap:ldap_options_idl_gen",
++# "//src/mongo/db/modules/enterprise/src/ldap:ldap_options_mongod_idl_gen",
++# "//src/mongo/db/modules/enterprise/src/ldap:ldap_parameters_idl_gen",
++# "//src/mongo/db/modules/enterprise/src/ldap:ldap_runtime_parameters_idl_gen",
++# "//src/mongo/db/modules/enterprise/src/ldap:ldap_tool_options_idl_gen",
++# "//src/mongo/db/modules/enterprise/src/ldap:ldap_user_cache_poller_idl_gen",
++# "//src/mongo/db/modules/enterprise/src/ldap/connections:connections_global_hdrs",
++# "//src/mongo/db/modules/enterprise/src/ldap/name_mapping:name_mapping_global_hdrs",
++# "//src/mongo/db/modules/enterprise/src/live_import:collection_properties_idl_gen",
++# "//src/mongo/db/modules/enterprise/src/live_import:live_import_global_hdrs",
++# "//src/mongo/db/modules/enterprise/src/live_import/commands:commands_global_hdrs",
++# "//src/mongo/db/modules/enterprise/src/live_import/commands:export_collection_idl_gen",
++# "//src/mongo/db/modules/enterprise/src/live_import/commands:import_collection_idl_gen",
++# "//src/mongo/db/modules/enterprise/src/live_import/commands:vote_commit_import_collection_idl_gen",
++# "//src/mongo/db/modules/enterprise/src/magic_restore:magic_restore_global_hdrs",
++# "//src/mongo/db/modules/enterprise/src/magic_restore:magic_restore_options_idl_gen",
++# "//src/mongo/db/modules/enterprise/src/magic_restore:magic_restore_structs_idl_gen",
++# "//src/mongo/db/modules/enterprise/src/queryable:queryable_global_hdrs",
++# "//src/mongo/db/modules/enterprise/src/queryable/blockstore:blockstore_global_hdrs",
++# "//src/mongo/db/modules/enterprise/src/queryable/queryable_wt:queryable_global_options_idl_gen",
++# "//src/mongo/db/modules/enterprise/src/queryable/queryable_wt:queryable_wt_global_hdrs",
++# "//src/mongo/db/modules/enterprise/src/sasl:auth_delay_idl_gen",
++# "//src/mongo/db/modules/enterprise/src/sasl:oidc_commands_idl_gen",
++# "//src/mongo/db/modules/enterprise/src/sasl:oidc_parameters_idl_gen",
++# "//src/mongo/db/modules/enterprise/src/sasl:sasl_aws_server_options_idl_gen",
++# "//src/mongo/db/modules/enterprise/src/sasl:sasl_global_hdrs",
++# "//src/mongo/db/modules/enterprise/src/scripts:scripts_global_hdrs",
++# "//src/mongo/db/modules/enterprise/src/serverless:mongoqd_options_idl_gen",
++# "//src/mongo/db/modules/enterprise/src/serverless:serverless_global_hdrs",
++# "//src/mongo/db/modules/enterprise/src/streams:streams_global_hdrs",
++# "//src/mongo/db/modules/enterprise/src/streams/commands:commands_global_hdrs",
++# "//src/mongo/db/modules/enterprise/src/streams/commands:stream_ops_idl_gen",
++# "//src/mongo/db/modules/enterprise/src/streams/exec:checkpoint_data_idl_gen",
++# "//src/mongo/db/modules/enterprise/src/streams/exec:common_idl_gen",
++# "//src/mongo/db/modules/enterprise/src/streams/exec:config_idl_gen",
++# "//src/mongo/db/modules/enterprise/src/streams/exec:exec_global_hdrs",
++# "//src/mongo/db/modules/enterprise/src/streams/exec:exec_internal_idl_gen",
++# "//src/mongo/db/modules/enterprise/src/streams/exec:stages_idl_gen",
++# "//src/mongo/db/modules/enterprise/src/streams/exec/checkpoint:checkpoint_global_hdrs",
++# "//src/mongo/db/modules/enterprise/src/streams/exec/tests:tests_global_hdrs",
++# "//src/mongo/db/modules/enterprise/src/streams/management:management_global_hdrs",
++# "//src/mongo/db/modules/enterprise/src/streams/management/tests:tests_global_hdrs",
++# "//src/mongo/db/modules/enterprise/src/streams/tools:tools_global_hdrs",
++# "//src/mongo/db/modules/enterprise/src/streams/util:util_global_hdrs",
++# "//src/mongo/db/modules/enterprise/src/streams/util/tests:tests_global_hdrs",
++# "//src/mongo/db/modules/enterprise/src/util:util_global_hdrs",
++# "//src/mongo/db/modules/enterprise/src/workloads:workloads_global_hdrs",
++# "//src/mongo/db/modules/enterprise/src/workloads/streams:streams_global_hdrs",
+         "//src/mongo/db/op_observer:op_observer_global_hdrs",
+         "//src/mongo/db/ops:delete_request_idl_gen",
+         "//src/mongo/db/ops:ops_global_hdrs",
+diff --git src/third_party/mozjs/BUILD.bazel src/third_party/mozjs/BUILD.bazel
+index 082d3086036..776d50e0197 100644
+--- src/third_party/mozjs/BUILD.bazel
++++ src/third_party/mozjs/BUILD.bazel
+@@ -48,7 +48,7 @@ PLATFORM_INCLUDES = select({
+ PLATFORM_COPTS = select({
+     config: [
+         ("/FI" if os == "windows" else "-include") + "$(location platform/{}/{}/build/js-confdefs.h)".format(arch, os),
+-    ] + (["-mavx2"] if arch == "x86_64" and os != "windows" else [])
++    ] + ([] if arch == "x86_64" and os != "windows" else [])
+     for config, (arch, os) in PLATFORMS.items()
+ } | {
+     "//conditions:default": ["//conditions:incompatible"],
+@@ -255,8 +255,8 @@ mongo_cc_library(
+             "-Wno-return-type",
+         ],
+     }) + select({
+-        "//bazel/config:linux_x86_64": ["-mavx2"],
+-        "//bazel/config:macos_x86_64": ["-mavx2"],
++        "//bazel/config:linux_x86_64": [],
++        "//bazel/config:macos_x86_64": [],
+         "//conditions:default": [],
+     }) + select({
+         # Suppress `register` keyword warnings in FreeBSD builds
+diff --git src/third_party/mozjs/extract/js/src/builtin/TestingFunctions.cpp src/third_party/mozjs/extract/js/src/builtin/TestingFunctions.cpp
+index 618bca5bfde..54c17699782 100644
+--- src/third_party/mozjs/extract/js/src/builtin/TestingFunctions.cpp
++++ src/third_party/mozjs/extract/js/src/builtin/TestingFunctions.cpp
+@@ -4873,10 +4873,10 @@ static bool IsAvxPresent(JSContext* cx, unsigned argc, Value* vp) {
+   }
+   switch (minVersion) {
+     case 1:
+-      args.rval().setBoolean(jit::Assembler::HasAVX());
++      args.rval().setBoolean(false);
+       return true;
+     case 2:
+-      args.rval().setBoolean(jit::Assembler::HasAVX2());
++      args.rval().setBoolean(false);
+       return true;
+   }
+ #endif
+diff --git src/third_party/mozjs/extract/js/src/intgemm/IntegerGemmIntrinsic.cpp src/third_party/mozjs/extract/js/src/intgemm/IntegerGemmIntrinsic.cpp
+index 0e79ccad36b..d8734956230 100644
+--- src/third_party/mozjs/extract/js/src/intgemm/IntegerGemmIntrinsic.cpp
++++ src/third_party/mozjs/extract/js/src/intgemm/IntegerGemmIntrinsic.cpp
+@@ -20,26 +20,7 @@
+ #include "wasm/WasmInstance.h"
+ #include "wasm/WasmLog.h"
+ 
+-#if defined(USE_AVX512BW)
+-#  if defined(USE_AVX512VNNI)
+-#    define SUPPORTED_ARCHS                                                 \
+-      xsimd::arch_list<xsimd::avx512vnni<xsimd::avx512bw>, xsimd::avx512bw, \
+-                       xsimd::avx2, xsimd::ssse3, xsimd::sse2>
+-#  elif defined(USE_AVXVNNI)
+-#    define SUPPORTED_ARCHS                                          \
+-      xsimd::arch_list<xsimd::avx512bw, xsimd::avxvnni, xsimd::avx2, \
+-                       xsimd::ssse3, xsimd::sse2>
+-#  else
+-#    define SUPPORTED_ARCHS \
+-      xsimd::arch_list<xsimd::avx512bw, xsimd::avx2, xsimd::ssse3, xsimd::sse2>
+-#  endif
+-#elif defined(USE_AVXVNNI)
+-#  define SUPPORTED_ARCHS \
+-    xsimd::arch_list<xsimd::avxvnni, xsimd::avx2, xsimd::ssse3, xsimd::sse2>
+-#elif defined(USE_AVX2)
+-#  define SUPPORTED_ARCHS \
+-    xsimd::arch_list<xsimd::avx2, xsimd::ssse3, xsimd::sse2>
+-#elif defined(USE_SSSE3)
++#if defined(USE_SSSE3)
+ #  define SUPPORTED_ARCHS xsimd::arch_list<xsimd::ssse3, xsimd::sse2>
+ #elif defined(USE_SSE2)
+ #  define SUPPORTED_ARCHS xsimd::arch_list<xsimd::sse2>
+diff --git src/third_party/mozjs/extract/js/src/intgemm/moz.build src/third_party/mozjs/extract/js/src/intgemm/moz.build
+index af4450b4e63..0b299038c7a 100644
+--- src/third_party/mozjs/extract/js/src/intgemm/moz.build
++++ src/third_party/mozjs/extract/js/src/intgemm/moz.build
+@@ -32,29 +32,13 @@ if CONFIG["INTEL_ARCHITECTURE"]:
+             "/third_party/gemmology/kernels/GemmologyEngineSSSE3.cpp"
+         ].flags += CONFIG["SSSE3_FLAGS"]
+     if CONFIG["AVX2_FLAGS"]:
+-        DEFINES["USE_AVX2"] = True
+-        SOURCES += ["/third_party/gemmology/kernels/GemmologyEngineAVX2.cpp"]
+-        SOURCES[
+-            "/third_party/gemmology/kernels/GemmologyEngineAVX2.cpp"
+-        ].flags += CONFIG["AVX2_FLAGS"]
++        DEFINES["USE_AVX2"] = False
+     if CONFIG["AVXVNNI_FLAGS"]:
+-        DEFINES["USE_AVXVNNI"] = True
+-        SOURCES += ["/third_party/gemmology/kernels/GemmologyEngineAVXVNNI.cpp"]
+-        SOURCES[
+-            "/third_party/gemmology/kernels/GemmologyEngineAVXVNNI.cpp"
+-        ].flags += CONFIG["AVXVNNI_FLAGS"]
++        DEFINES["USE_AVXVNNI"] = False
+     if CONFIG["AVX512BW_FLAGS"]:
+-        DEFINES["USE_AVX512BW"] = True
+-        SOURCES += ["/third_party/gemmology/kernels/GemmologyEngineAVX512BW.cpp"]
+-        SOURCES[
+-            "/third_party/gemmology/kernels/GemmologyEngineAVX512BW.cpp"
+-        ].flags += CONFIG["AVX512BW_FLAGS"]
++        DEFINES["USE_AVX512BW"] = False
+     if CONFIG["AVX512VNNI_FLAGS"]:
+-        DEFINES["USE_AVX512VNNI"] = True
+-        SOURCES += ["/third_party/gemmology/kernels/GemmologyEngineAVX512VNNI.cpp"]
+-        SOURCES[
+-            "/third_party/gemmology/kernels/GemmologyEngineAVX512VNNI.cpp"
+-        ].flags += CONFIG["AVX512VNNI_FLAGS"]
++        DEFINES["USE_AVX512VNNI"] = False
+ 
+ 
+ if CONFIG["TARGET_CPU"] == "aarch64":
+diff --git src/third_party/mozjs/extract/js/src/jit/x86-shared/Assembler-x86-shared.h src/third_party/mozjs/extract/js/src/jit/x86-shared/Assembler-x86-shared.h
+index 503ca5934c6..d58dafc50bb 100644
+--- src/third_party/mozjs/extract/js/src/jit/x86-shared/Assembler-x86-shared.h
++++ src/third_party/mozjs/extract/js/src/jit/x86-shared/Assembler-x86-shared.h
+@@ -236,7 +236,7 @@ class CPUInfo {
+   static bool IsBMI2Present() { return bmi2Present; }
+   static bool IsLZCNTPresent() { return lzcntPresent; }
+   static bool IsFMAPresent() { return fmaPresent; }
+-  static bool IsAVX2Present() { return avx2Present; }
++  static bool IsAVX2Present() { return false; }
+ 
+   static bool FlagsHaveBeenComputed() { return maxSSEVersion != UnknownSSE; }
+ 
+@@ -271,7 +271,7 @@ class CPUInfo {
+   }
+   static void SetAVXEnabled() {
+     MOZ_ASSERT(!FlagsHaveBeenComputed());
+-    avxEnabled = true;
++    avxEnabled = false;
+   }
+ };
+ 
+diff --git src/third_party/mozjs/extract/mozglue/misc/SIMD_avx2.cpp src/third_party/mozjs/extract/mozglue/misc/SIMD_avx2.cpp
+index a1467c7a559..cf8197e1609 100644
+--- src/third_party/mozjs/extract/mozglue/misc/SIMD_avx2.cpp
++++ src/third_party/mozjs/extract/mozglue/misc/SIMD_avx2.cpp
+@@ -8,271 +8,6 @@
+ #include "mozilla/SSE.h"
+ #include "mozilla/Assertions.h"
+ 
+-// Restricting to x86_64 simplifies things, and we're not particularly
+-// worried about slightly degraded performance on 32 bit processors which
+-// support AVX2, as this should be quite a minority.
+-#if defined(MOZILLA_MAY_SUPPORT_AVX2) && defined(__x86_64__)
+-
+-#  include <cstring>
+-#  include <immintrin.h>
+-#  include <stdint.h>
+-#  include <type_traits>
+-
+-#  include "mozilla/EndianUtils.h"
+-
+-namespace mozilla {
+-
+-const __m256i* Cast256(uintptr_t ptr) {
+-  return reinterpret_cast<const __m256i*>(ptr);
+-}
+-
+-template <typename T>
+-T GetAs(uintptr_t ptr) {
+-  return *reinterpret_cast<const T*>(ptr);
+-}
+-
+-uintptr_t AlignDown32(uintptr_t ptr) { return ptr & ~0x1f; }
+-
+-uintptr_t AlignUp32(uintptr_t ptr) { return AlignDown32(ptr + 0x1f); }
+-
+-template <typename TValue>
+-__m128i CmpEq128(__m128i a, __m128i b) {
+-  static_assert(sizeof(TValue) == 1 || sizeof(TValue) == 2);
+-  if (sizeof(TValue) == 1) {
+-    return _mm_cmpeq_epi8(a, b);
+-  }
+-  return _mm_cmpeq_epi16(a, b);
+-}
+-
+-template <typename TValue>
+-__m256i CmpEq256(__m256i a, __m256i b) {
+-  static_assert(sizeof(TValue) == 1 || sizeof(TValue) == 2 ||
+-                sizeof(TValue) == 8);
+-  if (sizeof(TValue) == 1) {
+-    return _mm256_cmpeq_epi8(a, b);
+-  }
+-  if (sizeof(TValue) == 2) {
+-    return _mm256_cmpeq_epi16(a, b);
+-  }
+-
+-  return _mm256_cmpeq_epi64(a, b);
+-}
+-
+-#  if defined(__GNUC__) && !defined(__clang__)
+-
+-// See the comment in SIMD.cpp over Load32BitsIntoXMM. This is just adapted
+-// from that workaround. Testing this, it also yields the correct instructions
+-// across all tested compilers.
+-__m128i Load64BitsIntoXMM(uintptr_t ptr) {
+-  int64_t tmp;
+-  memcpy(&tmp, reinterpret_cast<const void*>(ptr), sizeof(tmp));
+-  return _mm_cvtsi64_si128(tmp);
+-}
+-
+-#  else
+-
+-__m128i Load64BitsIntoXMM(uintptr_t ptr) {
+-  return _mm_loadu_si64(reinterpret_cast<const __m128i*>(ptr));
+-}
+-
+-#  endif
+-
+-template <typename TValue>
+-const TValue* Check4x8Bytes(__m128i needle, uintptr_t a, uintptr_t b,
+-                            uintptr_t c, uintptr_t d) {
+-  __m128i haystackA = Load64BitsIntoXMM(a);
+-  __m128i cmpA = CmpEq128<TValue>(needle, haystackA);
+-  __m128i haystackB = Load64BitsIntoXMM(b);
+-  __m128i cmpB = CmpEq128<TValue>(needle, haystackB);
+-  __m128i haystackC = Load64BitsIntoXMM(c);
+-  __m128i cmpC = CmpEq128<TValue>(needle, haystackC);
+-  __m128i haystackD = Load64BitsIntoXMM(d);
+-  __m128i cmpD = CmpEq128<TValue>(needle, haystackD);
+-  __m128i or_ab = _mm_or_si128(cmpA, cmpB);
+-  __m128i or_cd = _mm_or_si128(cmpC, cmpD);
+-  __m128i or_abcd = _mm_or_si128(or_ab, or_cd);
+-  int orMask = _mm_movemask_epi8(or_abcd);
+-  if (orMask & 0xff) {
+-    int cmpMask;
+-    cmpMask = _mm_movemask_epi8(cmpA);
+-    if (cmpMask & 0xff) {
+-      return reinterpret_cast<const TValue*>(a + __builtin_ctz(cmpMask));
+-    }
+-    cmpMask = _mm_movemask_epi8(cmpB);
+-    if (cmpMask & 0xff) {
+-      return reinterpret_cast<const TValue*>(b + __builtin_ctz(cmpMask));
+-    }
+-    cmpMask = _mm_movemask_epi8(cmpC);
+-    if (cmpMask & 0xff) {
+-      return reinterpret_cast<const TValue*>(c + __builtin_ctz(cmpMask));
+-    }
+-    cmpMask = _mm_movemask_epi8(cmpD);
+-    if (cmpMask & 0xff) {
+-      return reinterpret_cast<const TValue*>(d + __builtin_ctz(cmpMask));
+-    }
+-  }
+-
+-  return nullptr;
+-}
+-
+-template <typename TValue>
+-const TValue* Check4x32Bytes(__m256i needle, uintptr_t a, uintptr_t b,
+-                             uintptr_t c, uintptr_t d) {
+-  __m256i haystackA = _mm256_loadu_si256(Cast256(a));
+-  __m256i cmpA = CmpEq256<TValue>(needle, haystackA);
+-  __m256i haystackB = _mm256_loadu_si256(Cast256(b));
+-  __m256i cmpB = CmpEq256<TValue>(needle, haystackB);
+-  __m256i haystackC = _mm256_loadu_si256(Cast256(c));
+-  __m256i cmpC = CmpEq256<TValue>(needle, haystackC);
+-  __m256i haystackD = _mm256_loadu_si256(Cast256(d));
+-  __m256i cmpD = CmpEq256<TValue>(needle, haystackD);
+-  __m256i or_ab = _mm256_or_si256(cmpA, cmpB);
+-  __m256i or_cd = _mm256_or_si256(cmpC, cmpD);
+-  __m256i or_abcd = _mm256_or_si256(or_ab, or_cd);
+-  int orMask = _mm256_movemask_epi8(or_abcd);
+-  if (orMask) {
+-    int cmpMask;
+-    cmpMask = _mm256_movemask_epi8(cmpA);
+-    if (cmpMask) {
+-      return reinterpret_cast<const TValue*>(a + __builtin_ctz(cmpMask));
+-    }
+-    cmpMask = _mm256_movemask_epi8(cmpB);
+-    if (cmpMask) {
+-      return reinterpret_cast<const TValue*>(b + __builtin_ctz(cmpMask));
+-    }
+-    cmpMask = _mm256_movemask_epi8(cmpC);
+-    if (cmpMask) {
+-      return reinterpret_cast<const TValue*>(c + __builtin_ctz(cmpMask));
+-    }
+-    cmpMask = _mm256_movemask_epi8(cmpD);
+-    if (cmpMask) {
+-      return reinterpret_cast<const TValue*>(d + __builtin_ctz(cmpMask));
+-    }
+-  }
+-
+-  return nullptr;
+-}
+-
+-template <typename TValue>
+-const TValue* FindInBufferAVX2(const TValue* ptr, TValue value, size_t length) {
+-  static_assert(sizeof(TValue) == 1 || sizeof(TValue) == 2 ||
+-                sizeof(TValue) == 8);
+-  static_assert(std::is_unsigned<TValue>::value);
+-
+-  // Load our needle into a 32-byte register
+-  __m256i needle;
+-  if (sizeof(TValue) == 1) {
+-    needle = _mm256_set1_epi8(value);
+-  } else if (sizeof(TValue) == 2) {
+-    needle = _mm256_set1_epi16(value);
+-  } else {
+-    needle = _mm256_set1_epi64x(value);
+-  }
+-
+-  size_t numBytes = length * sizeof(TValue);
+-  uintptr_t cur = reinterpret_cast<uintptr_t>(ptr);
+-  uintptr_t end = cur + numBytes;
+-
+-  if (numBytes < 8 || (sizeof(TValue) == 8 && numBytes < 32)) {
+-    while (cur < end) {
+-      if (GetAs<TValue>(cur) == value) {
+-        return reinterpret_cast<const TValue*>(cur);
+-      }
+-      cur += sizeof(TValue);
+-    }
+-    return nullptr;
+-  }
+-
+-  if constexpr (sizeof(TValue) != 8) {
+-    if (numBytes < 32) {
+-      __m128i needle_narrow;
+-      if (sizeof(TValue) == 1) {
+-        needle_narrow = _mm_set1_epi8(value);
+-      } else {
+-        needle_narrow = _mm_set1_epi16(value);
+-      }
+-      uintptr_t a = cur;
+-      uintptr_t b = cur + ((numBytes & 16) >> 1);
+-      uintptr_t c = end - 8 - ((numBytes & 16) >> 1);
+-      uintptr_t d = end - 8;
+-      return Check4x8Bytes<TValue>(needle_narrow, a, b, c, d);
+-    }
+-  }
+-
+-  if (numBytes < 128) {
+-    // NOTE: here and below, we have some bit fiddling which could look a
+-    // little weird. The important thing to note though is it's just a trick
+-    // for getting the number 32 if numBytes is greater than or equal to 64,
+-    // and 0 otherwise. This lets us fully cover the range without any
+-    // branching for the case where numBytes is in [32,64), and [64,128). We get
+-    // four ranges from this - if numbytes > 64, we get:
+-    //   [0,32), [32,64], [end - 64), [end - 32)
+-    // and if numbytes < 64, we get
+-    //   [0,32), [0,32), [end - 32), [end - 32)
+-    uintptr_t a = cur;
+-    uintptr_t b = cur + ((numBytes & 64) >> 1);
+-    uintptr_t c = end - 32 - ((numBytes & 64) >> 1);
+-    uintptr_t d = end - 32;
+-    return Check4x32Bytes<TValue>(needle, a, b, c, d);
+-  }
+-
+-  // Get the initial unaligned load out of the way. This will overlap with the
+-  // aligned stuff below, but the overlapped part should effectively be free
+-  // (relative to a mispredict from doing a byte-by-byte loop).
+-  __m256i haystack = _mm256_loadu_si256(Cast256(cur));
+-  __m256i cmp = CmpEq256<TValue>(needle, haystack);
+-  int cmpMask = _mm256_movemask_epi8(cmp);
+-  if (cmpMask) {
+-    return reinterpret_cast<const TValue*>(cur + __builtin_ctz(cmpMask));
+-  }
+-
+-  // Now we're working with aligned memory. Hooray! \o/
+-  cur = AlignUp32(cur);
+-
+-  uintptr_t tailStartPtr = AlignDown32(end - 96);
+-  uintptr_t tailEndPtr = end - 32;
+-
+-  while (cur < tailStartPtr) {
+-    uintptr_t a = cur;
+-    uintptr_t b = cur + 32;
+-    uintptr_t c = cur + 64;
+-    uintptr_t d = cur + 96;
+-    const TValue* result = Check4x32Bytes<TValue>(needle, a, b, c, d);
+-    if (result) {
+-      return result;
+-    }
+-    cur += 128;
+-  }
+-
+-  uintptr_t a = tailStartPtr;
+-  uintptr_t b = tailStartPtr + 32;
+-  uintptr_t c = tailStartPtr + 64;
+-  uintptr_t d = tailEndPtr;
+-  return Check4x32Bytes<TValue>(needle, a, b, c, d);
+-}
+-
+-const char* SIMD::memchr8AVX2(const char* ptr, char value, size_t length) {
+-  const unsigned char* uptr = reinterpret_cast<const unsigned char*>(ptr);
+-  unsigned char uvalue = static_cast<unsigned char>(value);
+-  const unsigned char* uresult =
+-      FindInBufferAVX2<unsigned char>(uptr, uvalue, length);
+-  return reinterpret_cast<const char*>(uresult);
+-}
+-
+-const char16_t* SIMD::memchr16AVX2(const char16_t* ptr, char16_t value,
+-                                   size_t length) {
+-  return FindInBufferAVX2<char16_t>(ptr, value, length);
+-}
+-
+-const uint64_t* SIMD::memchr64AVX2(const uint64_t* ptr, uint64_t value,
+-                                   size_t length) {
+-  return FindInBufferAVX2<uint64_t>(ptr, value, length);
+-}
+-
+-}  // namespace mozilla
+-
+-#else
+-
+ namespace mozilla {
+ 
+ const char* SIMD::memchr8AVX2(const char* ptr, char value, size_t length) {
+@@ -291,4 +26,3 @@ const uint64_t* SIMD::memchr64AVX2(const uint64_t* ptr, uint64_t value,
+ 
+ }  // namespace mozilla
+ 
+-#endif
+diff --git src/third_party/mozjs/extract/mozglue/misc/SSE.cpp src/third_party/mozjs/extract/mozglue/misc/SSE.cpp
+index 74f3917788d..f5e0d4caf1d 100644
+--- src/third_party/mozjs/extract/mozglue/misc/SSE.cpp
++++ src/third_party/mozjs/extract/mozglue/misc/SSE.cpp
+@@ -204,37 +204,15 @@ bool sse4_2_enabled = has_cpuid_bits(1u, ecx, (1u << 20));
+ bool fma3_enabled = has_cpuid_bits(1u, ecx, (1u << 12));
+ #  endif
+ 
+-#  if !defined(MOZILLA_PRESUME_AVX) || !defined(MOZILLA_PRESUME_AVX2)
+ static bool has_avx() {
+-#    if defined(MOZILLA_PRESUME_AVX)
+-  return true;
+-#    else
+-  const unsigned AVX = 1u << 28;
+-  const unsigned OSXSAVE = 1u << 27;
+-  const unsigned XSAVE = 1u << 26;
+-
+-  const unsigned XMM_STATE = 1u << 1;
+-  const unsigned YMM_STATE = 1u << 2;
+-  const unsigned AVX_STATE = XMM_STATE | YMM_STATE;
+-
+-  return has_cpuid_bits(1u, ecx, AVX | OSXSAVE | XSAVE) &&
+-         // ensure the OS supports XSAVE of YMM registers
+-         (xgetbv(0) & AVX_STATE) == AVX_STATE;
+-#    endif  // MOZILLA_PRESUME_AVX
++  return false;
+ }
+-#  endif  // !MOZILLA_PRESUME_AVX || !MOZILLA_PRESUME_AVX2
+ 
+-#  if !defined(MOZILLA_PRESUME_AVX)
+-bool avx_enabled = has_avx();
+-#  endif
++bool avx_enabled = false;
+ 
+-#  if !defined(MOZILLA_PRESUME_AVX2)
+-bool avx2_enabled = has_avx() && has_cpuid_bits(7u, ebx, (1u << 5));
+-#  endif
++bool avx2_enabled = false;
+ 
+-#  if !defined(MOZILLA_PRESUME_AVXVNNI)
+-bool avxvnni_enabled = has_cpuid_bits_ex(7u, eax, (1u << 4));
+-#  endif
++bool avxvnni_enabled = false;
+ 
+ #  if !defined(MOZILLA_PRESUME_AES)
+ bool aes_enabled = has_cpuid_bits(1u, ecx, (1u << 25));
+diff --git src/third_party/mozjs/include/SSE.h src/third_party/mozjs/include/SSE.h
+index fc38e1295a5..a51747d227f 100644
+--- src/third_party/mozjs/include/SSE.h
++++ src/third_party/mozjs/include/SSE.h
+@@ -130,18 +130,6 @@
+ // It's ok to use SSE4.2 instructions based on the -march option.
+ #    define MOZILLA_PRESUME_SSE4_2 1
+ #  endif
+-#  ifdef __AVX__
+-// It's ok to use AVX instructions based on the -march option.
+-#    define MOZILLA_PRESUME_AVX 1
+-#  endif
+-#  ifdef __AVX2__
+-// It's ok to use AVX instructions based on the -march option.
+-#    define MOZILLA_PRESUME_AVX2 1
+-#  endif
+-#  ifdef __AVXVNNI__
+-// It's ok to use AVX instructions based on the -march option.
+-#    define MOZILLA_PRESUME_AVXVNNI 1
+-#  endif
+ #  ifdef __AES__
+ // It's ok to use AES instructions based on the -march option.
+ #    define MOZILLA_PRESUME_AES 1
+@@ -198,15 +186,6 @@ extern bool MFBT_DATA sse4_2_enabled;
+ #  if !defined(MOZILLA_PRESUME_FMA3)
+ extern bool MFBT_DATA fma3_enabled;
+ #  endif
+-#  if !defined(MOZILLA_PRESUME_AVX)
+-extern bool MFBT_DATA avx_enabled;
+-#  endif
+-#  if !defined(MOZILLA_PRESUME_AVX2)
+-extern bool MFBT_DATA avx2_enabled;
+-#  endif
+-#  if !defined(MOZILLA_PRESUME_AVXVNNI)
+-extern bool MFBT_DATA avxvnni_enabled;
+-#  endif
+ #  if !defined(MOZILLA_PRESUME_AES)
+ extern bool MFBT_DATA aes_enabled;
+ #  endif
+@@ -313,35 +292,11 @@ inline bool supports_fma3() { return sse_private::fma3_enabled; }
+ inline bool supports_fma3() { return false; }
+ #endif
+ 
+-#if defined(MOZILLA_PRESUME_AVX)
+-#  define MOZILLA_MAY_SUPPORT_AVX 1
+-inline bool supports_avx() { return true; }
+-#elif defined(MOZILLA_SSE_HAVE_CPUID_DETECTION)
+-#  define MOZILLA_MAY_SUPPORT_AVX 1
+-inline bool supports_avx() { return sse_private::avx_enabled; }
+-#else
+ inline bool supports_avx() { return false; }
+-#endif
+ 
+-#if defined(MOZILLA_PRESUME_AVX2)
+-#  define MOZILLA_MAY_SUPPORT_AVX2 1
+-inline bool supports_avx2() { return true; }
+-#elif defined(MOZILLA_SSE_HAVE_CPUID_DETECTION)
+-#  define MOZILLA_MAY_SUPPORT_AVX2 1
+-inline bool supports_avx2() { return sse_private::avx2_enabled; }
+-#else
+ inline bool supports_avx2() { return false; }
+-#endif
+ 
+-#if defined(MOZILLA_PRESUME_AVXVNNI)
+-#  define MOZILLA_MAY_SUPPORT_AVXVNNI 1
+-inline bool supports_avxvnni() { return true; }
+-#elif defined(MOZILLA_SSE_HAVE_CPUID_DETECTION)
+-#  define MOZILLA_MAY_SUPPORT_AVXVNNI 1
+-inline bool supports_avxvnni() { return sse_private::avxvnni_enabled; }
+-#else
+ inline bool supports_avxvnni() { return false; }
+-#endif
+ 
+ #if defined(MOZILLA_PRESUME_AES)
+ #  define MOZILLA_MAY_SUPPORT_AES 1
+diff --git src/third_party/mozjs/include/mozilla/SSE.h src/third_party/mozjs/include/mozilla/SSE.h
+index fc38e1295a5..a51747d227f 100644
+--- src/third_party/mozjs/include/mozilla/SSE.h
++++ src/third_party/mozjs/include/mozilla/SSE.h
+@@ -130,18 +130,6 @@
+ // It's ok to use SSE4.2 instructions based on the -march option.
+ #    define MOZILLA_PRESUME_SSE4_2 1
+ #  endif
+-#  ifdef __AVX__
+-// It's ok to use AVX instructions based on the -march option.
+-#    define MOZILLA_PRESUME_AVX 1
+-#  endif
+-#  ifdef __AVX2__
+-// It's ok to use AVX instructions based on the -march option.
+-#    define MOZILLA_PRESUME_AVX2 1
+-#  endif
+-#  ifdef __AVXVNNI__
+-// It's ok to use AVX instructions based on the -march option.
+-#    define MOZILLA_PRESUME_AVXVNNI 1
+-#  endif
+ #  ifdef __AES__
+ // It's ok to use AES instructions based on the -march option.
+ #    define MOZILLA_PRESUME_AES 1
+@@ -198,15 +186,6 @@ extern bool MFBT_DATA sse4_2_enabled;
+ #  if !defined(MOZILLA_PRESUME_FMA3)
+ extern bool MFBT_DATA fma3_enabled;
+ #  endif
+-#  if !defined(MOZILLA_PRESUME_AVX)
+-extern bool MFBT_DATA avx_enabled;
+-#  endif
+-#  if !defined(MOZILLA_PRESUME_AVX2)
+-extern bool MFBT_DATA avx2_enabled;
+-#  endif
+-#  if !defined(MOZILLA_PRESUME_AVXVNNI)
+-extern bool MFBT_DATA avxvnni_enabled;
+-#  endif
+ #  if !defined(MOZILLA_PRESUME_AES)
+ extern bool MFBT_DATA aes_enabled;
+ #  endif
+@@ -313,35 +292,11 @@ inline bool supports_fma3() { return sse_private::fma3_enabled; }
+ inline bool supports_fma3() { return false; }
+ #endif
+ 
+-#if defined(MOZILLA_PRESUME_AVX)
+-#  define MOZILLA_MAY_SUPPORT_AVX 1
+-inline bool supports_avx() { return true; }
+-#elif defined(MOZILLA_SSE_HAVE_CPUID_DETECTION)
+-#  define MOZILLA_MAY_SUPPORT_AVX 1
+-inline bool supports_avx() { return sse_private::avx_enabled; }
+-#else
+ inline bool supports_avx() { return false; }
+-#endif
+ 
+-#if defined(MOZILLA_PRESUME_AVX2)
+-#  define MOZILLA_MAY_SUPPORT_AVX2 1
+-inline bool supports_avx2() { return true; }
+-#elif defined(MOZILLA_SSE_HAVE_CPUID_DETECTION)
+-#  define MOZILLA_MAY_SUPPORT_AVX2 1
+-inline bool supports_avx2() { return sse_private::avx2_enabled; }
+-#else
+ inline bool supports_avx2() { return false; }
+-#endif
+ 
+-#if defined(MOZILLA_PRESUME_AVXVNNI)
+-#  define MOZILLA_MAY_SUPPORT_AVXVNNI 1
+-inline bool supports_avxvnni() { return true; }
+-#elif defined(MOZILLA_SSE_HAVE_CPUID_DETECTION)
+-#  define MOZILLA_MAY_SUPPORT_AVXVNNI 1
+-inline bool supports_avxvnni() { return sse_private::avxvnni_enabled; }
+-#else
+ inline bool supports_avxvnni() { return false; }
+-#endif
+ 
+ #if defined(MOZILLA_PRESUME_AES)
+ #  define MOZILLA_MAY_SUPPORT_AES 1
+diff --git src/third_party/snappy/dist/CMakeLists.txt src/third_party/snappy/dist/CMakeLists.txt
+index c3062e2e58f..ef45af52404 100644
+--- src/third_party/snappy/dist/CMakeLists.txt
++++ src/third_party/snappy/dist/CMakeLists.txt
+@@ -115,28 +115,6 @@ check_library_exists(lzo2 lzo1x_1_15_compress "" HAVE_LIBLZO2)
+ check_library_exists(lz4 LZ4_compress_default "" HAVE_LIBLZ4)
+ 
+ include(CheckCXXCompilerFlag)
+-CHECK_CXX_COMPILER_FLAG("/arch:AVX" HAVE_VISUAL_STUDIO_ARCH_AVX)
+-CHECK_CXX_COMPILER_FLAG("/arch:AVX2" HAVE_VISUAL_STUDIO_ARCH_AVX2)
+-CHECK_CXX_COMPILER_FLAG("-mavx" HAVE_CLANG_MAVX)
+-CHECK_CXX_COMPILER_FLAG("-mbmi2" HAVE_CLANG_MBMI2)
+-if(SNAPPY_REQUIRE_AVX2)
+-  if(HAVE_VISUAL_STUDIO_ARCH_AVX2)
+-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /arch:AVX2")
+-  endif(HAVE_VISUAL_STUDIO_ARCH_AVX2)
+-  if(HAVE_CLANG_MAVX)
+-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -mavx")
+-  endif(HAVE_CLANG_MAVX)
+-  if(HAVE_CLANG_MBMI2)
+-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -mbmi2")
+-  endif(HAVE_CLANG_MBMI2)
+-elseif (SNAPPY_REQUIRE_AVX)
+-  if(HAVE_VISUAL_STUDIO_ARCH_AVX)
+-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /arch:AVX")
+-  endif(HAVE_VISUAL_STUDIO_ARCH_AVX)
+-  if(HAVE_CLANG_MAVX)
+-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -mavx")
+-  endif(HAVE_CLANG_MAVX)
+-endif(SNAPPY_REQUIRE_AVX2)
+ 
+ # Used by googletest.
+ check_cxx_compiler_flag(-Wno-missing-field-initializers
+diff --git src/third_party/snappy/dist/snappy.cc src/third_party/snappy/dist/snappy.cc
+index 279be1f463c..b0402788a3d 100644
+--- src/third_party/snappy/dist/snappy.cc
++++ src/third_party/snappy/dist/snappy.cc
+@@ -38,7 +38,7 @@
+ // GCC and Clang can build code with AVX2 enabled but BMI2 disabled, in which
+ // case issuing BMI2 instructions results in a compiler error.
+ #if defined(__BMI2__) || (defined(_MSC_VER) && defined(__AVX2__))
+-#define SNAPPY_HAVE_BMI2 1
++#define SNAPPY_HAVE_BMI2 0
+ #else
+ #define SNAPPY_HAVE_BMI2 0
+ #endif
+@@ -1108,16 +1108,7 @@ void MemCopy64(char* dst, const void* src, size_t size) {
+   // might copy more than size bytes the copy still might overlap past size.
+   // E.g. if src and dst appear consecutively in memory (src + size >= dst).
+   // TODO: Investigate wider copies on other platforms.
+-#if defined(__x86_64__) && defined(__AVX__)
+-  assert(kShortMemCopy <= 32);
+-  __m256i data = _mm256_lddqu_si256(static_cast<const __m256i *>(src));
+-  _mm256_storeu_si256(reinterpret_cast<__m256i *>(dst), data);
+-  // Profiling shows that nearly all copies are short.
+-  if (SNAPPY_PREDICT_FALSE(size > kShortMemCopy)) {
+-    data = _mm256_lddqu_si256(static_cast<const __m256i *>(src) + 1);
+-    _mm256_storeu_si256(reinterpret_cast<__m256i *>(dst) + 1, data);
+-  }
+-#elif defined(__aarch64__)
++#if defined(__aarch64__)
+   // Emperically it is faster to just copy all 64 rather than branching.
+   (void)kShortMemCopy;
+   (void)size;
