@@ -1,4 +1,4 @@
-FROM ubuntu:jammy AS mongo-src
+FROM ubuntu:noble AS mongo-src
 
 ENV DEBIAN_FRONTEND=noninteractive
 ENV PYTHON_KEYRING_BACKEND=keyring.backends.null.Keyring
@@ -38,7 +38,7 @@ RUN for patch in $(ls patches/*.patch | sort); do patch -p0 < $patch; done
 # Copy .bazelrc.local to the source directory
 COPY .bazelrc.local /src/mongo/
 
-FROM ubuntu:jammy
+FROM ubuntu:noble
 
 ENV DEBIAN_FRONTEND=noninteractive
 ENV PYTHON_KEYRING_BACKEND=keyring.backends.null.Keyring
@@ -75,7 +75,11 @@ RUN apt-get install -y \
 RUN python3 buildscripts/install_bazel.py
 ENV PATH="/root/.local/bin:${PATH}"
 
-# Build MongoDB
-RUN USE_NATIVE_TOOLCHAIN=1 bazel build --config=local --repo_env=BAZEL_DO_NOT_DETECT_CPP_TOOLCHAIN=0 --compiler_type=gcc --linker=auto -c opt --copt=-march=${CPU_ARCH} //src/mongo/db:mongod
+RUN USE_NATIVE_TOOLCHAIN=1 bazel build --config=local --repo_env=BAZEL_DO_NOT_DETECT_CPP_TOOLCHAIN=0 --compiler_type=gcc --linker=auto -c opt \
+	--copt=-march=${CPU_ARCH} --copt=-Wno-interference-size --cxxopt=-Wno-interference-size \
+	--cxxopt=-Wno-mismatched-new-delete \
+	--copt=-Wno-stringop-overflow --cxxopt=-Wno-stringop-overflow \
+	--cxxopt=-Wno-array-bounds \
+	//src/mongo/db:mongod
 
 ENTRYPOINT ["bash", "-lc", "mkdir -p /tmp/output && cp -L bazel-bin/src/mongo/db/mongod /tmp/output/mongod && cd /tmp/output && zip -r mongod.zip mongod"]
