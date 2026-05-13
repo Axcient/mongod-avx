@@ -4,7 +4,7 @@ This project builds a custom MongoDB 8.0.* server package for **Ubuntu 22.04 (Ja
 
 It applies patches from the `patches/` directory to build MongoDB **without AVX** compiler flags, enabling compatibility with older CPUs that do not support AVX or AVX2 instructions.
 
-The build uses `--copt=-march=${CPU_ARCH}` (for example `nehalem`) so you can target older machines that lack AVX/AVX2.
+The build uses `--copt=-march=${CPU_ARCH}` (for example `nehalem` or `core2`) so you can target older machines. Core&nbsp;2–class CPUs lack SSE4.2 as well as AVX/AVX2; when `CPU_ARCH=core2`, an extra Snappy patch is applied (see below).
 
 This project is based on the official MongoDB source code, which is licensed under the Server Side Public License (SSPL) v1.  
 The original source code is available here:  
@@ -28,8 +28,10 @@ The following patches are applied to the MongoDB source tree:
 - **0004-Disable-advanced-features-gcc.patch**
   Improves compatibility and portability by avoiding advanced CPU-specific features.
 
-- **0007-Fix-pessimizing-move-in-expression_hasher-for-GCC13.patch**  
-  Removes a redundant `std::move` on a returned temporary so **GCC 13** (e.g. Ubuntu 24.04) does not fail with `-Werror=pessimizing-move`. Jammy’s GCC 11 is lenient here.
+### For core2 (`--build-arg CPU_ARCH=core2`)
+
+- **core2/0005-disable-crc32-snappy.patch**  
+  Disables the x86 CRC32 fast path in Snappy (uses a portable hash instead), avoiding SSE4.2 `crc32` instructions that Core&nbsp;2 does not support.
 
 ---
 
@@ -58,12 +60,14 @@ Example:
 
 ```sh
 ./builder.sh "12" "nehalem"
+./builder.sh "12" "core2"
 ```
 
-`CPU_ARCH` is any valid GCC `-march=` value (default in scripts/Dockerfile: `nehalem`).
+`CPU_ARCH` is any valid GCC `-march=` value (default in Dockerfile: `nehalem`). For Core&nbsp;2, use `core2` so the Dockerfile merges in the Snappy CRC32 patch.
 
 ### Examples (Noble)
 
 ```sh
 ./builder.sh "12" "nehalem" noble
+./builder.sh "12" "core2" noble
 ```
